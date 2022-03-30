@@ -5,4 +5,4 @@ source env/bin/activate
 pip install fastapi
 python -m pip install --upgrade pip
 pip install uvicorn
-uni
+uvicorn main:app --reload
