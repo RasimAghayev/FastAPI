@@ -12,6 +12,6 @@ async def get_component(componenet_id):
     return {"comonenet_id":componenet_id}
 
 @app.get("/component/")
-async def read_component(number:int, text:Optinal[str]): #query parametr
+async def read_component(number:int, text:Optional[str]): #query parametr
     return {"number":number,"text":text}
 
