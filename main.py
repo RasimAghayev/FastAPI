@@ -1,36 +1,51 @@
 from fastapi import FastAPI
-from typing import Optional
 from pydantic import BaseModel
+from typing import Optional,List
 
-class PackageIn(BaseModel):
-    secret_id: int
+class Todo(BaseModel):
     name: str
-    number: str
-    description: Optional[str]=None
+    due_date:str
+    description:str
 
-class Package(BaseModel):
-    name: str
-    number: str
-    description: Optional[str]=None
+app=FastAPI(title="ToDo API")
 
-app=FastAPI()
+#Create, Read, update, Delete (CRUD)
 
-@app.get('/')
-async def hello_world():
-    return  {"Hello":"World"}
+store_todo=[]
 
-@app.post("/package",response_model=Package,response_model_include={"description"})
-async def make_package(package: PackageIn):
-    return package
+@app.get("/")
+async def home():
+    return{"hello":"World"}
 
-# @app.post("/package/{priority}")
-# async def make_package(priority: int,package: Package, value: bool):
-#     return {"priority": priority, **package.dict(), "value":value }
+@app.post("/todo/")
+async def create_todo(todo: Todo):
+    store_todo.append(todo)
+    return todo
 
-# @app.get("/component/{componenet_id}") #path parameter
-# async def get_component(componenet_id):
-#     return {"comonenet_id":componenet_id}
+@app.get("/todo/", response_model=List[Todo])
+async def get_all_todos():
+    return store_todo
 
-# @app.get("/component/")
-# async def read_component(number:int, text:Optional[str]): #query parametr
-#     return {"number":number,"text":text}
+@app.get('/todo/{id}')
+async def get_todo(id: int):
+    try:
+        return store_todo[id]
+    except:
+        raise HTTPException(status_code=404,detail="Todo Not Found")
+
+@app.put('linux/{id}')
+async def update_todo(id: int, todo:Todo):
+    try:
+        store_todo[id]=todo
+        return store_todo[id]
+    except:
+        raise HTTPException(status_code=404,detail="Todo Not Found")
+
+@app.get('/todo/{id}')
+async def delete_todo(id:int):
+    try:
+        obj=store_todo[id]
+        store_todo.pop(id)
+        return obj
+    except:
+        raise HTTPException(status_code=404,detail="Todo Not Found")
