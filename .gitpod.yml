@@ -3,10 +3,6 @@
 # and commit this file to your remote git repository to share the goodness with others.
 
 tasks:
-  - command: source env/bin/activate
-  - command: pip install fastapi
-  - command: python -m pip install --upgrade pip
-  - command: pip install uvicorn
-  - command: uvicorn main:app --reload
+  - command: source env/bin/activate && pip install fastapi && python -m pip install --upgrade pip && pip install uvicorn && uvicorn main:app --reload
 
 
