@@ -1,5 +1,8 @@
 # FastAPI Todo API
 
+![Views](https://hits.sh/github.com/RasimAghayev/FastAPI.svg?label=views&color=0e75b6)
+
+
 A FastAPI application implementing a Todo CRUD API with Tortoise ORM and SQLite.
 
 ## Overview
